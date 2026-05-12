@@ -1,19 +1,55 @@
 from flask_mail import Message
 from flask import current_app
 from app.extensions import mail
+import requests
 
+
+# def send_email(subject, recipients, body, html):
+#     msg = Message(
+#         subject=subject,
+#         recipients=recipients,
+#         body=body,
+#         html=html,
+#         sender=current_app.config["MAIL_DEFAULT_SENDER"]
+#     )
+#     try:
+#         mail.send(msg)
+#         print("Email sent successfully")
+#     except Exception as e:
+#         print("Email failed:", str(e))
 
 def send_email(subject, recipients, body, html):
-    msg = Message(
-        subject=subject,
-        recipients=recipients,
-        body=body,
-        html=html,
-        sender=current_app.config["MAIL_DEFAULT_SENDER"]
-    )
+    api_key = current_app.config["BREVO_API_KEY"]
+
+    url = "https://api.brevo.com/v3/smtp/email"
+
+    payload = {
+        "sender": {
+            "name": "Tensio",
+            "email": current_app.config["MAIL_DEFAULT_SENDER"]
+        },
+        "to": [{"email": recipients[0]}],
+        "subject": subject,
+        "htmlContent": html
+    }
+
+    headers = {
+        "accept": "application/json",
+        "api-key": api_key,
+        "content-type": "application/json"
+    }
+
     try:
-        mail.send(msg)
-        print("Email sent successfully")
+        response = requests.post(
+            url,
+            json=payload,
+            headers=headers,
+            timeout=10
+        )
+
+        print(response.status_code)
+        print(response.text)
+
     except Exception as e:
         print("Email failed:", str(e))
 
