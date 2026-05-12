@@ -18,7 +18,7 @@ class Config:
     GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 
     SECRET_KEY = os.getenv("SECRET_KEY")
-    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_SERVER = "smtp-relay.brevo.com"
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")

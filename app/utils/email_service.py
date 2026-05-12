@@ -11,7 +11,11 @@ def send_email(subject, recipients, body, html):
         html=html,
         sender=current_app.config["MAIL_DEFAULT_SENDER"]
     )
-    mail.send(msg)
+    try:
+        mail.send(msg)
+        print("Email sent successfully")
+    except Exception as e:
+        print("Email failed:", str(e))
 
 
 def send_verification_email(user_email, token):
