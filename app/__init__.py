@@ -11,7 +11,11 @@ from config import Config
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    CORS(app)
+    CORS(
+        app,
+        resources={r"/api/*": {"origins": "*"}},
+        supports_credentials=True
+    )
 
     db.init_app(app)
     bcrypt.init_app(app)
