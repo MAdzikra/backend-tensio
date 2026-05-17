@@ -4,54 +4,59 @@ from app.extensions import mail
 import requests
 
 
-# def send_email(subject, recipients, body, html):
-#     msg = Message(
-#         subject=subject,
-#         recipients=recipients,
-#         body=body,
-#         html=html,
-#         sender=current_app.config["MAIL_DEFAULT_SENDER"]
-#     )
-#     try:
-#         mail.send(msg)
-#         print("Email sent successfully")
-#     except Exception as e:
-#         print("Email failed:", str(e))
-
 def send_email(subject, recipients, body, html):
-    api_key = current_app.config["BREVO_API_KEY"]
-
-    url = "https://api.brevo.com/v3/smtp/email"
-
-    payload = {
-        "sender": {
-            "name": "Tensio",
-            "email": current_app.config["MAIL_DEFAULT_SENDER"]
-        },
-        "to": [{"email": recipients[0]}],
-        "subject": subject,
-        "htmlContent": html
-    }
-
-    headers = {
-        "accept": "application/json",
-        "api-key": api_key,
-        "content-type": "application/json"
-    }
-
+    msg = Message(
+        subject=subject,
+        recipients=recipients,
+        body=body,
+        html=html,
+        sender=current_app.config["MAIL_DEFAULT_SENDER"]
+    )
     try:
-        response = requests.post(
-            url,
-            json=payload,
-            headers=headers,
-            timeout=10
-        )
-
-        print(response.status_code)
-        print(response.text)
-
+        mail.send(msg)
+        print("Email sent successfully")
     except Exception as e:
         print("Email failed:", str(e))
+
+# def send_email(subject, recipients, body, html):
+#     api_key = current_app.config["BREVO_API_KEY"]
+#     print("=== DEBUG EMAIL ===")
+#     print("API KEY EXISTS:", bool(api_key))
+#     print("SENDER:", current_app.config.get("MAIL_DEFAULT_SENDER"))
+#     print("RECIPIENT:", recipients)
+#     print("SUBJECT:", subject)
+#     url = "https://api.brevo.com/v3/smtp/email"
+
+#     payload = {
+#         "sender": {
+#             "name": "Tensio",
+#             "email": current_app.config["MAIL_DEFAULT_SENDER"]
+#         },
+#         "to": [{"email": recipients[0]}],
+#         "subject": subject,
+#         "htmlContent": html
+#     }
+#     print("PAYLOAD:", payload)
+
+#     headers = {
+#         "accept": "application/json",
+#         "api-key": api_key,
+#         "content-type": "application/json"
+#     }
+
+#     try:
+#         response = requests.post(
+#             url,
+#             json=payload,
+#             headers=headers,
+#             timeout=10
+#         )
+
+#         print(response.status_code)
+#         print(response.text)
+
+#     except Exception as e:
+#         print("Email failed:", str(e))
 
 
 def send_verification_email(user_email, token):
