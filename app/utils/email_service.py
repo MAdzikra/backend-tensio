@@ -362,7 +362,7 @@ def send_reset_password_email(user_email, token):
                             font-weight:bold;
                             font-size:15px;
                         ">
-                        Verifikasi Akun
+                        Reset Password
                         </a>
                     </td>
                     </tr>
