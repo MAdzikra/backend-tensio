@@ -25,6 +25,7 @@ class Config:
     MAIL_USE_SLS = False
 
     BREVO_API_KEY = os.getenv("BREVO_API_KEY")
+    RESEND_API_KEY = os.getenv("RESEND_API_KEY")
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
